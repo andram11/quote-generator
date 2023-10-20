@@ -6,23 +6,23 @@ const newQuoteBtn = document.getElementById('new-quote')
 const loader= document.getElementById('loader')
 
 let apiQuotes= [] //global variable
-//Show loading
+//Show loading spinner
 
-function loading(){
+function showLoadingSpinner(){
     loader.hidden= false
     quoteContainer.hidden= true
 }
 
 //Hide loading
 
-function complete(){
+function removeLoadingSpinner(){
     quoteContainer.hidden= false
     loader.hidden=true
 }
 
 // Show new quote
 function newQuote() {
-    loading()
+    showLoadingSpinner()
     //Pick a random quote from apiQuotes array
     const quote= apiQuotes[Math.floor(Math.random() * apiQuotes.length)]
     //check if author field blank
@@ -32,20 +32,20 @@ function newQuote() {
         authorText.textContent = quote.author
     }
     //check if quote length, in order to change font size
-    if (quoteText.length > 50){
+    if (quoteText.length > 120){
         quoteText.classList.add('long-quote')
     } else {
         quoteText.classList.remove('long-quote') 
     }
     //Set quote, hide loader
     quoteText.textContent = quote.text
-    complete()
+    removeLoadingSpinner()
     
 }
 //Get Quotes from api
 //asyncronous fetch request 
 async function getQuotes(){
-    loading()
+    showLoadingSpinner()
     const apiUrl="https://jacintodesign.github.io/quotes-api/data/quotes.json"
     try{
         const response= await fetch(apiUrl)
